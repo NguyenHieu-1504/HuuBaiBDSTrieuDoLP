@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Fullton Regal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0f1a2b;--ink2:#16253b;--gold:#c9a86a;--gold2:#e6d3a3;--cream:#f5efe3;--cream2:#ebe2d0;--txt:#2a2a2a;--mut:#7a7466;
+--serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;--sans:'Jost',system-ui,-apple-system,'Segoe UI',sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--cream:#131d2d;--cream2:#1a2639;--txt:#e9e3d4;--mut:#a39c8a}}
+:root[data-theme="dark"]{--cream:#131d2d;--cream2:#1a2639;--txt:#e9e3d4;--mut:#a39c8a}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*:before,*:after{box-sizing:border-box}
+body{margin:0;font-family:var(--sans);font-weight:300;background:var(--cream);color:var(--txt);overflow-x:hidden;line-height:1.7}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--serif);font-weight:300;margin:0;line-height:1.15}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.eyebrow{font-size:12px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold)}
+.rv{opacity:0;transform:translateY(40px);transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+.line{display:block;overflow:hidden}.line>span{display:block;transform:translateY(110%);transition:transform 1.3s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.in .line>span,.line.in>span{transform:none}
+/* preloader */
+#pre{position:fixed;inset:0;background:var(--ink);z-index:100;display:grid;place-items:center;transition:transform 1.2s cubic-bezier(.77,0,.18,1) .2s}
+#pre.done{transform:translateY(-100%)}
+#pre .lg{text-align:center;color:var(--gold2);animation:fade 1.6s ease both}
+#pre .lg b{display:block;font:300 34px var(--serif);letter-spacing:.4em;text-indent:.4em}
+#pre .lg i{display:block;width:0;height:1px;background:var(--gold);margin:18px auto 0;animation:bar 1.8s .3s ease forwards}
+#pre small{letter-spacing:.5em;font-size:11px;text-transform:uppercase}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}}
+@keyframes bar{to{width:160px}}
+/* header */
+.top{position:fixed;top:0;left:0;right:0;z-index:50;padding:calc(18px + env(safe-area-inset-top,0px)) 32px 18px;display:flex;align-items:center;justify-content:space-between;color:#fff;transition:transform .6s,background .5s,padding .5s}
+.top.solid{background:rgba(15,26,43,.92);backdrop-filter:blur(10px);padding-top:calc(10px + env(safe-area-inset-top,0px));padding-bottom:10px}
+.top.hide{transform:translateY(-100%)}
+.brand{font:400 22px var(--serif);letter-spacing:.35em}
+.brand small{display:block;font:300 9px var(--sans);letter-spacing:.6em;color:var(--gold2);margin-top:-2px}
+.tr{display:flex;align-items:center;gap:22px;font-size:13px;letter-spacing:.08em}
+.tr .cta{border:1px solid var(--gold);padding:9px 22px;transition:.4s}
+.tr .cta:hover{background:var(--gold);color:var(--ink)}
+.burger{width:32px;height:20px;position:relative;cursor:pointer;background:none;border:0;padding:0}
+.burger i{position:absolute;left:0;height:1px;background:#fff;width:100%;transition:.4s}
+.burger i:nth-child(1){top:2px}.burger i:nth-child(2){top:10px;width:70%;left:30%}.burger i:nth-child(3){top:18px}
+.burger:hover i:nth-child(2){width:100%;left:0}
+@media(max-width:700px){.tr .ph,.tr .cta{display:none}.top{padding-left:20px;padding-right:20px}}
+/* menu */
+#menu{position:fixed;inset:0;background:radial-gradient(circle at 80% 20%,#22385a,var(--ink) 60%);z-index:80;color:#fff;display:flex;align-items:center;justify-content:center;clip-path:circle(0 at calc(100% - 48px) 40px);transition:clip-path 1s cubic-bezier(.77,0,.18,1);visibility:hidden}
+#menu.open{clip-path:circle(150% at calc(100% - 48px) 40px);visibility:visible}
+#menu nav{text-align:center}
+#menu nav a{display:block;font:300 clamp(30px,5vw,54px) var(--serif);padding:8px;opacity:0;transform:translateY(30px);transition:.8s;position:relative}
+#menu.open nav a{opacity:1;transform:none;transition-delay:calc(.35s + var(--i)*.08s)}
+#menu nav a:hover{color:var(--gold2);letter-spacing:.06em}
+#menu .x{position:absolute;top:calc(22px + env(safe-area-inset-top,0px));right:32px;font-size:34px;font-weight:200;cursor:pointer;background:none;border:0;color:#fff;transition:transform .5s}
+#menu .x:hover{transform:rotate(90deg)}
+#menu .ft{position:absolute;bottom:40px;left:0;right:0;text-align:center;color:var(--gold2);letter-spacing:.2em}
+/* hero */
+.hero{height:100vh;min-height:620px;position:relative;overflow:hidden;color:#fff;display:grid;place-items:center;text-align:center;background:var(--ink)}
+.hero .bg{position:absolute;inset:-8% 0;background:radial-gradient(ellipse at 50% 85%,#f0c98a 0,#c07a55 18%,transparent 48%),linear-gradient(180deg,#0f1a2b 0%,#2c4468 45%,#8a6a6a 75%,#d9a877 100%);animation:zoom 14s ease-out both;will-change:transform}
+.hero .bg:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(15,26,43,.6),transparent 40%)}
+@keyframes zoom{from{transform:scale(1.18)}to{transform:scale(1)}}
+.hero .bld{position:absolute;bottom:0;left:0;right:0;height:38%;display:flex;align-items:flex-end;justify-content:center;gap:2%;opacity:.55}
+.hero .bld i{display:block;width:7%;background:linear-gradient(#0d1524,#1b2b45);border-top:1px solid rgba(230,211,163,.4)}
+.hero .ct{position:relative;z-index:2;padding:0 24px}
+.hero h1{font-size:clamp(46px,9vw,120px);letter-spacing:.14em;text-indent:.14em;font-weight:300}
+.hero h1 em{display:block;font-style:italic;font-size:.42em;letter-spacing:.5em;color:var(--gold2);margin-top:10px}
+.hero p{letter-spacing:.4em;font-size:12px;text-transform:uppercase;color:var(--gold2);margin-top:26px}
+.scroll{position:absolute;bottom:30px;left:50%;z-index:2;width:1px;height:70px;background:rgba(255,255,255,.25);overflow:hidden}
+.scroll:after{content:"";position:absolute;left:0;top:-100%;width:1px;height:100%;background:var(--gold2);animation:sc 2.2s infinite}
+@keyframes sc{to{top:100%}}
+/* intro */
+.intro{padding:150px 0 90px;text-align:center}
+.intro h2{font-size:clamp(24px,3.6vw,44px);max-width:900px;margin:0 auto;line-height:1.5}
+.intro h2 span{display:block}
+.vid{position:relative;margin:80px auto 0;max-width:1000px;aspect-ratio:16/9;overflow:hidden;cursor:pointer;background:linear-gradient(135deg,#1c3050,#b98a62 70%,#f0d5a0)}
+.vid:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 70%,rgba(255,255,255,.25),transparent 50%);transition:transform 1.4s}
+.vid:hover:before{transform:scale(1.25)}
+.play{position:absolute;top:50%;left:50%;width:84px;height:84px;margin:-42px;border:1px solid #fff;border-radius:50%;display:grid;place-items:center;color:#fff;animation:pulse 2.4s infinite}
+.play:after{content:"";border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:5px}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.5)}100%{box-shadow:0 0 0 40px transparent}}
+.outro{margin-top:80px;font:italic 300 clamp(20px,2.4vw,30px) var(--serif);color:var(--mut)}
+.outro b{display:block;font-weight:300;color:var(--txt)}
+/* facts */
+.facts{background:var(--ink);color:#fff;padding:110px 0 90px;position:relative;overflow:hidden}
+.facts:before{content:"";position:absolute;right:-10%;top:-30%;width:600px;height:600px;border-radius:50%;border:1px solid rgba(201,168,106,.2);box-shadow:0 0 0 60px rgba(201,168,106,.04),0 0 0 120px rgba(201,168,106,.03)}
+.facts .logo{text-align:center;font:300 clamp(28px,4vw,48px) var(--serif);letter-spacing:.4em;color:var(--gold2);margin-bottom:70px}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:40px;text-align:center;position:relative}
+.nums div{border-top:1px solid rgba(201,168,106,.35);padding-top:26px}
+.nums small{display:block;font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
+.nums b{display:block;font:300 clamp(44px,5vw,70px) var(--serif);margin-top:6px;line-height:1.1}
+.nums b.t{font-size:26px;padding-top:16px}
+.part{margin-top:90px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:34px;text-align:center;font-size:13px;color:#b9c0cc;position:relative}
+.part span{display:block;margin-top:12px;padding:14px;border:1px solid rgba(255,255,255,.15);color:var(--gold2);letter-spacing:.2em;font:400 15px var(--serif);transition:.5s}
+.part span:hover{border-color:var(--gold);background:rgba(201,168,106,.08)}
+/* location */
+.loc{padding:140px 0}
+.loc .g{display:grid;grid-template-columns:1fr 1.15fr;gap:70px;align-items:center}
+.loc h2{font-size:clamp(38px,5vw,66px)}
+.loc h2 em{display:block;font-size:.55em;color:var(--gold);font-style:italic;margin:8px 0 26px}
+.loc p{color:var(--mut);max-width:480px}
+.acc{margin-top:34px;border-top:1px solid var(--cream2)}
+.acc button{width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:0;border-bottom:1px solid var(--cream2);padding:18px 0;font:400 20px var(--serif);color:var(--txt);cursor:pointer;text-align:left}
+.acc button:after{content:"+";font:200 28px var(--sans);color:var(--gold);transition:transform .5s}
+.acc .it.open button:after{transform:rotate(45deg)}
+.acc ul{list-style:none;margin:0;padding:0;max-height:0;overflow:hidden;transition:max-height .7s cubic-bezier(.2,.7,.2,1);color:var(--mut)}
+.acc ul li{padding:5px 0 5px 18px;position:relative}.acc ul li:before{content:"";position:absolute;left:0;top:17px;width:8px;height:1px;background:var(--gold)}
+.acc .it.open ul{padding-bottom:16px}
+.map{aspect-ratio:1;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 50%,#2d4a3e 0,#1c3a4a 55%,#13263a);clip-path:inset(0 0 0 0)}
+.map:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(30deg,transparent 0 46px,rgba(230,211,163,.07) 46px 47px),repeating-linear-gradient(-40deg,transparent 0 70px,rgba(230,211,163,.06) 70px 71px)}
+.map .pin{position:absolute;left:50%;top:48%;width:20px;height:20px;background:var(--gold);border-radius:50%;box-shadow:0 0 0 0 rgba(201,168,106,.6);animation:pulse2 2.4s infinite}
+@keyframes pulse2{100%{box-shadow:0 0 0 46px transparent}}
+.map .pin+span{position:absolute;left:50%;top:48%;transform:translate(-50%,26px);color:var(--gold2);font:400 14px var(--serif);letter-spacing:.3em;white-space:nowrap}
+.map .dot{position:absolute;width:8px;height:8px;border-radius:50%;background:#fff;opacity:.55}
+@media(max-width:860px){.loc .g{grid-template-columns:1fr;gap:50px}}
+/* philosophy */
+.phil{background:var(--ink);color:#fff;text-align:center;padding:160px 0;position:relative;overflow:hidden}
+.phil:before,.phil:after{content:"";position:absolute;width:520px;height:520px;border:1px solid rgba(201,168,106,.25);transform:rotate(45deg)}
+.phil:before{left:-260px;top:8%}.phil:after{right:-260px;bottom:8%}
+.phil h2{font-size:clamp(50px,9vw,130px);letter-spacing:.06em;position:relative}
+.phil h2 span{display:block;font-style:italic;color:var(--gold2);margin-top:-.1em}
+.phil p{max-width:620px;margin:60px auto 0;font:300 clamp(19px,2vw,26px) var(--serif);line-height:2;color:#d8d2c2;position:relative}
+/* clubhouse */
+.club{padding:130px 0 60px}
+.club .hd{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.club h2{font-size:clamp(38px,5vw,64px)}
+.club p{color:var(--mut)}
+.pic{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--g)}
+.pic:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.35),transparent 50%)}
+.pic>div{position:absolute;inset:0;background:var(--g);transition:transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.pic:hover>div{transform:scale(1.08)}
+.zones{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:80px}
+.zone{position:relative;aspect-ratio:3/4;overflow:hidden;color:#fff}
+.zone>div{position:absolute;inset:0;background:var(--g);transition:transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.zone:hover>div{transform:scale(1.07)}
+.zone:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,15,25,.75),transparent 55%)}
+.zone h3{position:absolute;left:34px;bottom:70px;z-index:2;font-size:clamp(30px,4vw,54px);font-style:italic}
+.zone p{position:absolute;left:34px;bottom:30px;right:34px;z-index:2;font-size:14px;color:var(--gold2);margin:0}
+.zone:nth-child(2){margin-top:90px}
+@media(max-width:800px){.club .hd,.zones{grid-template-columns:1fr}.zone:nth-child(2){margin-top:0}}
+.tabs{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:0 0 40px}
+.tabs button{background:none;border:0;border-bottom:1px solid transparent;padding:10px 26px;font:400 13px var(--sans);letter-spacing:.25em;text-transform:uppercase;color:var(--mut);cursor:pointer;transition:.4s}
+.tabs button.on,.tabs button:hover{color:var(--gold);border-color:var(--gold)}
+.plan{padding:70px 0 130px}
+.plan h2{text-align:center;font-size:clamp(30px,4vw,50px);margin-bottom:12px}
+.plan .sub{text-align:center;margin-bottom:40px}
+.pl{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center}
+.pl .fl{aspect-ratio:4/3;background:var(--cream2);position:relative;border:1px solid rgba(201,168,106,.35);overflow:hidden}
+.pl .fl i{position:absolute;border:1px solid var(--gold);background:rgba(201,168,106,.12);transition:.9s cubic-bezier(.2,.7,.2,1)}
+.pl ol{list-style:none;margin:0;padding:0;counter-reset:n}
+.pl li{counter-increment:n;padding:13px 0 13px 46px;border-bottom:1px solid var(--cream2);position:relative;opacity:0;transform:translateX(24px);animation:li .8s forwards;animation-delay:calc(var(--i)*.07s)}
+.pl li:before{content:counter(n,decimal-leading-zero);position:absolute;left:0;top:14px;font:400 15px var(--serif);color:var(--gold)}
+.pl li b{display:block;font:400 19px var(--serif)}.pl li small{color:var(--mut);font-size:12px;letter-spacing:.08em}
+@keyframes li{to{opacity:1;transform:none}}
+@media(max-width:800px){.pl{grid-template-columns:1fr}}
+/* parks */
+.park{position:relative;color:#fff;overflow:hidden;transition:background 1s}
+.park .stage{min-height:92vh;display:flex;align-items:flex-end;position:relative;padding:120px 0 90px}
+.park .sl{position:absolute;inset:0;background:var(--g);opacity:0;transition:opacity 1.4s,transform 8s linear;transform:scale(1.12)}
+.park .sl.on{opacity:1;transform:scale(1)}
+.park .stage:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,14,24,.85),rgba(8,14,24,.1) 60%)}
+.park .in2{position:relative;z-index:2;width:100%}
+.park h2{font-size:clamp(50px,8vw,110px)}
+.park h2 em{color:var(--gold2)}
+.park .q{max-width:520px;margin-top:20px;font:italic 300 clamp(19px,2vw,26px) var(--serif);color:#e5dfcf}
+.dots{display:flex;gap:10px;margin-top:34px}
+.dots i{width:34px;height:2px;background:rgba(255,255,255,.3);cursor:pointer;transition:.4s}.dots i.on{background:var(--gold2);width:60px}
+.amen{background:var(--ink2);padding:70px 0 90px}
+.amen h3{text-align:center;font-size:30px;margin-bottom:34px;color:var(--gold2)}
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0 34px}
+.chips div{padding:11px 0;border-bottom:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;transition:.4s;opacity:0;animation:li .7s forwards;animation-delay:calc(var(--i)*.03s)}
+.chips div:hover{padding-left:12px;border-color:var(--gold)}
+.chips b{font:400 15px var(--serif);letter-spacing:.06em;color:#fff}.chips small{color:#9aa4b5;font-size:13px}
+/* villas */
+.own{padding:150px 0;text-align:center;background:linear-gradient(var(--cream),var(--cream2))}
+.own h2{font-size:clamp(38px,6vw,84px)}.own h2 em{display:block;color:var(--gold)}
+.own>.wrap>p{max-width:520px;margin:24px auto 0;color:var(--mut)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:80px;text-align:left}
+.card{position:relative;aspect-ratio:3/4.3;overflow:hidden;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:34px}
+.card>div{position:absolute;inset:0;background:var(--g);transition:transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.card:hover>div{transform:scale(1.09)}
+.card:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,15,25,.88),transparent 65%)}
+.card *{position:relative;z-index:2}
+.card h3{font-size:30px}.card h3 small{display:block;font:300 13px var(--sans);letter-spacing:.1em;color:var(--gold2);margin-top:4px}
+.card p{font-size:14px;color:#dcd6c6;margin:14px 0;max-height:0;opacity:0;overflow:hidden;transition:.7s}
+.card:hover p{max-height:120px;opacity:1}
+.card span{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold2);border-bottom:1px solid var(--gold);align-self:flex-start;padding-bottom:4px}
+.card:nth-child(2){transform:translateY(40px)}
+@media(max-width:900px){.cards{grid-template-columns:1fr}.card{aspect-ratio:4/3.4}.card:nth-child(2){transform:none}.card p{max-height:120px;opacity:1}}
+/* footer */
+footer{background:var(--ink);color:#c8ceda;padding:100px 0 50px;font-size:14px}
+footer .g{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:50px}
+footer .lg{font:300 30px var(--serif);letter-spacing:.35em;color:var(--gold2);margin-bottom:20px}
+footer h4{font:400 12px var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin:0 0 14px}
+footer .big{font:300 40px var(--serif);color:#fff;display:block;margin-bottom:26px}
+footer .soc{display:flex;gap:14px}
+footer .soc a{width:42px;height:42px;border:1px solid rgba(255,255,255,.25);border-radius:50%;display:grid;place-items:center;font-size:12px;transition:.4s}
+footer .soc a:hover{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+footer .cp{margin-top:70px;padding-top:26px;border-top:1px solid rgba(255,255,255,.1);text-align:center;font-size:12px;color:#7f8899}
+@media(max-width:800px){footer .g{grid-template-columns:1fr}}
+/* float */
+.fl2{position:fixed;right:18px;bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;flex-direction:column;gap:12px}
+.fl2 a{width:52px;height:52px;border-radius:50%;background:var(--gold);color:var(--ink);display:grid;place-items:center;font-size:11px;letter-spacing:.05em;box-shadow:0 8px 24px rgba(0,0,0,.3);transition:transform .4s;animation:fade 1s 2.5s both}
+.fl2 a:hover{transform:scale(1.12) rotate(-6deg)}
+.fl2 a+a{background:var(--ink);color:var(--gold2);border:1px solid var(--gold)}
+</style>
+</head>
+<body>
+<div id="pre"><div class="lg"><b>THE FULLTON</b><small>Regal</small><i></i></div></div>
+
+<header class="top" id="top">
+  <a class="brand" href="#">FULLTON<small>REGAL</small></a>
+  <div class="tr"><span class="ph">☎ 1800 400 088</span><a class="cta" href="#contact">Nhận tư vấn</a><button class="burger" id="bg" aria-label="Menu"><i></i><i></i><i></i></button></div>
+</header>
+
+<div id="menu">
+  <button class="x" id="mx" aria-label="Đóng">×</button>
+  <nav>
+    <a href="#top" style="--i:0">Trang chủ</a><a href="#location" style="--i:1">Thông tin dự án</a><a href="#courtyard" style="--i:2">Tiến độ xây dựng</a><a href="#parks" style="--i:3">Thư viện</a><a href="#contact" style="--i:4">Liên hệ</a><a href="#own" style="--i:5;color:var(--gold2);font-style:italic">The Fullton Edition</a>
+  </nav>
+  <div class="ft">1800 400 088</div>
+</div>
+
+<section class="hero">
+  <div class="bg" id="hbg"></div>
+  <div class="bld"><i style="height:45%"></i><i style="height:80%"></i><i style="height:60%"></i><i style="height:100%"></i><i style="height:70%"></i><i style="height:52%"></i><i style="height:88%"></i></div>
+  <div class="ct">
+    <h1><span class="line"><span id="h1a">THE FULLTON</span></span><em class="line"><span id="h1b">Regal</span></em></h1>
+    <p class="rv" id="hp">Biểu tượng mới khu Đông Hà Nội</p>
+  </div>
+  <div class="scroll"></div>
+</section>
+
+<section class="intro"><div class="wrap">
+  <h2>
+    <span class="line rv"><span>Mỗi con người sinh ra không phải để chạy theo những lối đi đã được định sẵn.</span></span>
+    <span class="line rv" style="--d:.2s"><span>Mà để học cách lắng nghe chính mình.</span></span>
+    <span class="line rv" style="--d:.4s"><span>Và đủ bản lĩnh lựa chọn điều trái tim thực sự mong muốn.</span></span>
+  </h2>
+  <div class="vid rv"><div class="play"></div></div>
+  <div class="outro rv">Để từ đó, một hành trình đầy ý nghĩa được mở ra,<b>nơi mỗi chúng ta tự tay kiến tạo tuyệt tác riêng mình.</b></div>
+</div></section>
+
+<section class="facts"><div class="wrap">
+  <div class="logo rv">THE FULLTON REGAL</div>
+  <div class="nums">
+    <div class="rv"><small>Diện tích đất</small><b><span class="cnt" data-to="14.5" data-d="1">0</span> ha</b></div>
+    <div class="rv" style="--d:.1s"><small>Số căn</small><b class="cnt" data-to="348">0</b></div>
+    <div class="rv" style="--d:.2s"><small>Số phân khu</small><b class="t">2 · Regal West &amp; Regal East</b></div>
+    <div class="rv" style="--d:.3s"><small>Số tiện ích</small><b class="cnt" data-to="75">0</b></div>
+  </div>
+  <div class="part">
+    <div class="rv">Chủ đầu tư chính<span>CAPITALAND</span></div>
+    <div class="rv" style="--d:.1s">Phối hợp cùng<span>FAR EAST ORGANIZATION</span></div>
+    <div class="rv" style="--d:.2s">Tư vấn kiến trúc và cảnh quan<span>RT+Q</span></div>
+    <div class="rv" style="--d:.3s">Tư vấn thiết kế nội thất clubhouse<span>2E</span></div>
+    <div class="rv" style="--d:.4s">Tư vấn thiết kế nội thất biệt thự mẫu<span>ITH INTERIOR</span></div>
+  </div>
+</div></section>
+
+<section class="loc" id="location"><div class="wrap g">
+  <div>
+    <div class="eyebrow rv">Toạ độ di sản</div>
+    <h2 class="rv" style="--d:.1s;margin-top:14px">Toạ độ di sản<em>biểu tượng mới khu Đông Hà Nội</em></h2>
+    <p class="rv" style="--d:.2s">Nằm tại cửa ngõ sôi động phía Đông Hà Nội – vùng đất đang phát triển đồng bộ với hạ tầng chiến lược, The Fullton Regal sở hữu lợi thế giao thông linh hoạt đến trung tâm Thủ đô và các khu vực kinh tế trọng điểm lân cận qua hệ thống cao tốc, quốc lộ và những cây cầu kết nối...</p>
+    <div class="acc rv" style="--d:.3s" id="acc">
+      <div class="it open"><button>Giáo dục</button><ul><li>Trường Đại học Anh Quốc Việt Nam BUV</li><li>Vinschool</li><li>Vin University</li><li>Brighton College</li></ul></div>
+      <div class="it"><button>Y tế</button><ul><li>Bệnh viện đa khoa quốc tế Vinmec</li></ul></div>
+      <div class="it"><button>Mua sắm &amp; giải trí</button><ul><li>AEON Mall Long Biên</li><li>Vincom Mega Mall</li><li>Grand World</li><li>Sân golf Long Biên</li></ul></div>
+      <div class="it"><button>Điểm tham quan</button><ul><li>4 Seasons Bay Park</li><li>Ocean Park 2</li><li>Royal Wave Water Park</li><li>Làng gốm Bát Tràng</li><li>Công viên Yên Sở</li></ul></div>
+    </div>
+  </div>
+  <div class="map rv" style="--d:.2s" id="map"><i class="pin"></i><span>THE FULLTON REGAL</span></div>
+</div></section>
+
+<section class="phil"><div class="wrap">
+  <div class="eyebrow rv" style="margin-bottom:26px">Regal West · Regal East</div>
+  <h2 class="rv">Courtyard<span>Philosophy</span></h2>
+  <p class="rv" style="--d:.2s">Ôm ấp một khoảng không tĩnh lặng.<br>Là điểm tựa vững vàng cho mọi giá trị nội tại.<br>Nơi yêu thương âm thầm lan tỏa mọi không gian.<br>Nơi thiên nhiên vẽ nên bức tranh bốn mùa đầy thi vị.<br>Và vận khí đạt tới sự cân bằng hoàn hảo.</p>
+</div></section>
+
+<section class="club" id="courtyard"><div class="wrap">
+  <div class="hd">
+    <div><div class="eyebrow rv">Clubhouse</div><h2 class="rv" style="--d:.1s;margin:14px 0 24px">The Courtyard</h2>
+    <p class="rv" style="--d:.2s">Như "nhịp đập" trung tâm đầy kiêu hãnh gắn kết phân khu Regal West và Regal East, Clubhouse The Courtyard là nơi những giá trị sống độc bản được tôn vinh, đưa chủ nhân bước vào hành trình trải nghiệm đa tầng giữa hệ sinh thái tiện ích quốc tế đẳng cấp.</p></div>
+    <div class="pic rv" style="--g:linear-gradient(135deg,#27435f,#a98b62 60%,#eed9a8)"><div></div></div>
+  </div>
+  <div class="zones">
+    <div class="zone rv" style="--g:linear-gradient(160deg,#3d6b4f,#173a33 70%,#0d1f24)"><div></div><h3>Active Zone</h3><p>Cho nhựa sống được đánh thức một cách tự nhiên.</p></div>
+    <div class="zone rv" style="--d:.15s;--g:linear-gradient(160deg,#5a4a78,#2a2f5a 60%,#e2b48b)"><div></div><h3>Mindfulness Zone</h3><p>Cho tâm trí tìm lại được sự tĩnh tại đầy chiều sâu bên trong tâm hồn.</p></div>
+  </div>
+</div></section>
+
+<section class="plan"><div class="wrap">
+  <div class="eyebrow rv" style="text-align:center">Mặt bằng tiện ích Clubhouse</div>
+  <h2 class="rv" style="margin-top:12px">The Courtyard</h2>
+  <div class="tabs sub rv" id="ft"><button class="on" data-f="0">Tầng 1</button><button data-f="1">Tầng 2</button><button data-f="2">Tầng 3</button></div>
+  <div class="pl"><div class="fl" id="fl"></div><ol id="fo"></ol></div>
+</div></section>
+
+<section class="park" id="parks">
+  <div class="stage" id="stage">
+    <div class="in2"><div class="wrap">
+      <div class="tabs" id="pt" style="justify-content:flex-start"><button class="on" data-p="0">West Park</button><button data-p="1">East Park</button></div>
+      <h2 id="ph2"></h2><p class="q" id="pq"></p>
+      <div class="dots" id="dots"></div>
+    </div></div>
+  </div>
+  <div class="amen"><div class="wrap"><h3>Bản đồ tiện ích</h3><div class="chips" id="chips"></div></div></div>
+</section>
+
+<section class="own" id="own"><div class="wrap">
+  <div class="eyebrow rv">The Fullton Edition</div>
+  <h2 class="rv" style="margin-top:14px">Làm chủ<em>bản sắc nội tại</em></h2>
+  <p class="rv" style="--d:.15s">Mỗi ngôi nhà là một tạo tác định danh, mang trong mình những giá trị độc bản mà ta hằng gìn giữ.</p>
+  <div class="cards">
+    <a class="card rv" href="#" style="--g:linear-gradient(160deg,#385f4c,#152a2c 75%)"><div></div><h3>Park Mansion &amp; Courtyard Villa<small>Biệt thự Công viên &amp; Biệt thự Đơn lập</small></h3><p>Đứng tên những chủ nhân coi trọng sự kín đáo và sang trọng xứng tầm tinh hoa.</p><span>Khám phá</span></a>
+    <a class="card rv" href="#" style="--d:.15s;--g:linear-gradient(160deg,#2b466b,#1a2440 70%,#a8785a)"><div></div><h3>Patio Twin Villa<small>Biệt thự Song lập</small></h3><p>Đứng tên những chủ nhân mong muốn sự kết nối vẹn tròn mà không phải đánh đổi đặc quyền riêng tư.</p><span>Khám phá</span></a>
+    <a class="card rv" href="#" style="--d:.3s;--g:linear-gradient(160deg,#7a5b4b,#3a2d3e 70%,#171d30)"><div></div><h3>Terrace Townhouse<small>Nhà phố</small></h3><p>Đứng tên những chủ nhân tìm kiếm một cuộc sống năng động nhưng vẫn đủ bình yên nơi tâm hồn.</p><span>Khám phá</span></a>
+  </div>
+</div></section>
+
+<footer id="contact"><div class="wrap">
+  <div class="g">
+    <div><div class="lg">FULLTON</div><p>Công ty TNHH Đầu tư Phát triển bất động sản Lighthouse 2<br>Mã doanh nghiệp: 0901165991<br>Địa chỉ: Căn TĐ 6-02, Khu đô thị Đại An, Xã Nghĩa Trụ, Tỉnh Hưng Yên, Việt Nam</p></div>
+    <div><h4>Nhận tư vấn</h4><a class="big" href="tel:1800400088">1800 400 088</h4></a><h4>Chủ đầu tư chính</h4>CAPITALAND<br><br><h4>Phối hợp cùng</h4>FAR EAST ORGANIZATION</div>
+    <div><h4>Theo dõi chúng tôi</h4><div class="soc"><a href="#">FB</a><a href="#">TT</a><a href="#">YT</a></div></div>
+  </div>
+  <div class="cp">© The Fullton Regal. Bản dựng giao diện minh hoạ.</div>
+</div></footer>
+
+<div class="fl2"><a href="#" title="Virtual tour">360°</a><a href="#" title="Messenger">Chat</a></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+// preloader + hero intro
+addEventListener('load',()=>setTimeout(()=>{$('#pre').classList.add('done');
+ setTimeout(()=>{$$('.hero .line').forEach(l=>l.classList.add('in'));$('#hp').classList.add('in')},700)},2200));
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');
+ e.target.querySelectorAll('.cnt').forEach(c=>count(c));if(e.target.classList.contains('cnt'))count(e.target);io.unobserve(e.target)}}),{threshold:.15});
+$$('.rv').forEach(el=>io.observe(el));
+function count(c){if(c.done)return;c.done=1;const to=+c.dataset.to,dec=(c.dataset.d|0),t0=performance.now();
+ (function f(t){const p=Math.min((t-t0)/1800,1),v=to*(1-Math.pow(1-p,3));c.textContent=v.toFixed(dec);if(p<1)requestAnimationFrame(f)})(t0)}
+// header
+let ly=0;addEventListener('scroll',()=>{const y=scrollY,h=$('#top');h.classList.toggle('solid',y>60);h.classList.toggle('hide',y>ly&&y>400);ly=y;
+ $('#hbg').style.transform=`translateY(${y*.25}px) scale(${1+y/6000})`;
+ $$('.pic>div,.zone>div,.card>div').forEach(e=>{const r=e.parentElement.getBoundingClientRect();if(r.top<innerHeight&&r.bottom>0)e.style.translate=`0 ${(r.top-innerHeight/2)*-.06}px`})},{passive:true});
+// menu
+const m=$('#menu');$('#bg').onclick=()=>m.classList.add('open');$('#mx').onclick=()=>m.classList.remove('open');$$('#menu a').forEach(a=>a.onclick=()=>m.classList.remove('open'));
+// accordion
+$$('#acc .it').forEach(it=>{const u=it.querySelector('ul');if(it.classList.contains('open'))u.style.maxHeight=u.scrollHeight+40+'px';
+ it.querySelector('button').onclick=()=>{$$('#acc .it').forEach(o=>{if(o!==it){o.classList.remove('open');o.querySelector('ul').style.maxHeight=0}});
+ it.classList.toggle('open');u.style.maxHeight=it.classList.contains('open')?u.scrollHeight+40+'px':0}});
+// map dots
+const mp=$('#map');for(let i=0;i<14;i++){const d=document.createElement('i');d.className='dot';d.style.left=(15+Math.random()*70)+'%';d.style.top=(15+Math.random()*70)+'%';mp.appendChild(d)}
+// floors
+const F=[[["Đài phun nước The Courtyard","The Courtyard Fountain"],["Sảnh đón The Courtyard","The Courtyard Drop-Off"],["Khu đỗ xe","Parking Area"],["Lễ tân","Reception"],["Vườn Treo","The Courtyard"],["Hồ bơi 4 mùa The Courtyard","The Courtyard Heated Pool"],["Vườn bên hồ","Poolside Garden"],["Sảnh cư dân The Courtyard","The Courtyard Lounge"],["Phòng thay đồ","Changing Room"],["Phòng tiệc Regal","Regal Party House"]],
+[["Phòng tập Yoga, Barre & Pilates","Yoga, Barre & Pilates Studio"],["Góc vui chơi gia đình","Family Game Station"],["Phòng Golf 3D","3D Golf"],["Khu Xông Hơi","Sauna & Steam"],["Bể trị liệu tương phản","Ember & Frost"],["Phòng Gym","Fitness Arena"]],
+[["Vườn chân mây","Sky Terrace"],["Sảnh ẩm thực","Gourmet Suite"],["Không gian làm việc chung","Co-Working Space"],["Vườn trà đạo","Tea Garden"]]];
+function floor(n){$$('#ft button').forEach((b,i)=>b.classList.toggle('on',i==n));
+ $('#fo').innerHTML=F[n].map((x,i)=>`<li style="--i:${i}"><b>${x[0]}</b><small>${x[1]}</small></li>`).join('');
+ $('#fl').innerHTML=F[n].map((x,i)=>{const w=14+(i*7)%18,h=12+(i*11)%20;return `<i style="left:${6+(i*23)%68}%;top:${6+(i*31)%64}%;width:${w}%;height:${h}%"></i>`}).join('')}
+$$('#ft button').forEach(b=>b.onclick=()=>floor(b.dataset.f));floor(0);
+// parks
+const P=[{n:'West',q:'Vững chãi như nhịp thở của đất. Nơi năng lượng được nuôi dưỡng từ những chuyển động đầy cảm hứng.',g:['linear-gradient(160deg,#3f6b4a,#173a33 70%)','linear-gradient(160deg,#5b7a45,#22402f 70%)','linear-gradient(160deg,#7a8a5a,#2a4a3a 65%,#d9b57a)','linear-gradient(160deg,#2f5a55,#12303a)','linear-gradient(160deg,#6b7f4b,#2a3f2a)'],
+ l:[["Terra Pool","Hồ Bơi Terra 50m"],["Jacuzzi Nest","Bể Sục Thư Giãn"],["Terra Pool Cabanas","Chòi Nghỉ Bên Hồ"],["Pool Sunbath Deck","Ghế Tắm Nắng"],["Baby's Pool","Hồ bơi Nhí"],["Floating Lounge Deck","Lounge Bồng Bềnh"],["Terra Pavilion","Chòi Terra"],["Jogging Loop","Đường Chạy Bộ"],["Pet Park","Công Viên Thú Cưng"],["Hammock Haven","Vườn Võng"],["Echo Pavilion","Chòi Thanh Âm"],["Retention Pond","Hồ Tĩnh Thủy"],["Natural Yoga Deck","Thảm Yoga Thiên Nhiên"],["Campfire Pit","Sân Lửa Trại"],["Camping Lawn","Vườn Dã Ngoại"],["Gathering Lawn","Thảm Cỏ Hội Ngộ"],["Meet-up Pavilion","Chòi BBQ"],["Herb Garden","Vườn Thảo Mộc"],["Scented Sitting","Ghế Thảo Hương"],["Kids Playground","Sân Chơi Trẻ Em"],["Kinetic Zone","Khu Vận Động"],["Rain Garden","Vườn Mưa"],["Sand Discover Yard","Sân Cát Khám Phá"],["Shady Shelter","Chòi Bóng Mát"],["Fitness Arena","Sân Thể Thao Đa Năng"],["Terra Recreation Park","Công Viên Vận Động Terra"],["Pulse & Pause Nook","Bậc Thang Thư Giãn"],["Reflexology path","Đường Dạo Mát-xa"],["Cascade Waterfall","Thác Mây"],["Sunset Amphitheater","Nhà Hát Hoàng Hôn"],["Skate line","Đường Trượt Ván"]]},
+{n:'East',q:'Mềm mại như dòng chảy của nước. Nơi dẫn lối ta về với tĩnh lặng thuần khiết.',g:['linear-gradient(160deg,#2e5c7a,#12304a 70%)','linear-gradient(160deg,#3f7f8a,#173a4a 70%)','linear-gradient(160deg,#5a86a0,#1c3350 60%,#e0b98a)','linear-gradient(160deg,#2a4f6b,#111f3a)','linear-gradient(160deg,#4a8a86,#1a3a48)'],
+ l:[["Azure Resort Pool","Hồ Bơi Azure 50m"],["Jacuzzi Nest","Bể Sục Thư Giãn"],["Azure Pool Cabanas","Chòi Nghỉ Bên Hồ"],["Kids Lagoon","Bể Vầy Trẻ Em"],["Dining Terrace","Khu Tiệc Ngoài Trời"],["Sunken Lounge","Lounge Tĩnh Tại"],["Basketball Court","Sân Bóng Rổ"],["Connect Pavilion","Chòi Nghỉ Kết Nối"],["Sanctuary Nook","Sân Chơi Cát"],["Vitality Garden","Vườn Năng Lượng"],["Gathering Lawn","Thảm Cỏ Hội Ngộ"],["Shady Canopy","Vòm Bóng Mát"],["Serenity Pond","Hồ Tĩnh Thủy"],["Floating Zen Deck","Chòi Thiền Mặt Nước"],["Reflexology path","Đường Dạo Mát-xa"],["Water play stream","Suối Trẻ Thơ"],["Prosperity Pond","Hồ Thịnh Vượng"],["Reading Station","Trạm Đọc"],["Grill & Smoke Pavilion","Chòi BBQ"],["Herb Garden","Vườn Thảo Mộc"],["Sunrise Amphitheater","Nhà Hát Bình Minh"],["Serenity Pocket Garden","Vườn An Tĩnh"],["Pet Park","Công Viên Thú Cưng"],["Sunshade","Hiên Che Nắng"]]}];
+let cp=0,ci=0,tm;
+function park(i){cp=i;ci=0;$$('#pt button').forEach((b,k)=>b.classList.toggle('on',k==i));const d=P[i];
+ $('#ph2').innerHTML=`<span class="line in"><span>${d.n} <em>Park</em></span></span>`;$('#pq').textContent=d.q;
+ $('#stage').querySelectorAll('.sl').forEach(s=>s.remove());
+ d.g.forEach((g,k)=>{const s=document.createElement('div');s.className='sl'+(k?'':' on');s.style.setProperty('--g',g);$('#stage').prepend(s)});
+ $('#dots').innerHTML=d.g.map((_,k)=>`<i class="${k?'':'on'}" data-k="${k}"></i>`).join('');
+ $$('#dots i').forEach(x=>x.onclick=()=>slide(+x.dataset.k));
+ $('#chips').innerHTML=d.l.map((x,k)=>`<div style="--i:${k}"><b>${x[0]}</b><small>${x[1]}</small></div>`).join('')}
+function slide(k){ci=k;const s=[...$$('#stage .sl')].reverse();s.forEach((e,j)=>e.classList.toggle('on',j==k));$$('#dots i').forEach((e,j)=>e.classList.toggle('on',j==k));}
+$$('#pt button').forEach(b=>b.onclick=()=>park(+b.dataset.p));park(0);
+setInterval(()=>slide((ci+1)%P[cp].g.length),5000);
+</script>
+</body>
+</html>
